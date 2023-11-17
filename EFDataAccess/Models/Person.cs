@@ -8,9 +8,10 @@ namespace EFDataAccess.Models
 {
     public class Person
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
+        public int age { get; set; }
         public List<Address> Addresses { get; set; } = new List<Address>();
         public List<Email> EmailAdresses { get; set; } = new List<Email>();
     }
