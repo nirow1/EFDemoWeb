@@ -1,6 +1,9 @@
 using EFDataAccess.DataAccess;
+using EFDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace EFDemoWeb.Pages
 {
@@ -17,7 +20,12 @@ namespace EFDemoWeb.Pages
 
         public void OnGet()
         {
+            LoadSampleData();
 
+            var people = db.People
+                .Include(a => a.Addresses)
+                .Include(x => x.EmailAdresses).ToList();
+                
         }
 
         private void LoadSampleData()
@@ -25,6 +33,10 @@ namespace EFDemoWeb.Pages
             if(db.People.Count() == 0)
             {
                 String file = System.IO.File.ReadAllText("generated.json");
+                var people = JsonSerializer.Deserialize<List<Person>>(file);
+                if(people != null)
+                    this.db.AddRange(people);
+                this.db.SaveChanges();
             }
         }
     }
