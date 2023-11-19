@@ -1,3 +1,4 @@
+using Azure;
 using EFDataAccess.DataAccess;
 using EFDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,8 @@ namespace EFDemoWeb.Pages
             var people = db.People
                 .Include(a => a.Addresses)
                 .Include(x => x.Email)
-                .ToList();
+                .ToList()
+                .Where(x => x.Age >= 21 && x.Age <= 65);
         }
 
         private void LoadSampleData()
