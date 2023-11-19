@@ -24,8 +24,8 @@ namespace EFDemoWeb.Pages
 
             var people = db.People
                 .Include(a => a.Addresses)
-                .Include(x => x.EmailAdresses).ToList();
-                
+                .Include(x => x.Email)
+                .ToList();
         }
 
         private void LoadSampleData()
